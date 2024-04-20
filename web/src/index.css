@@ -1,0 +1,15 @@
+.content {
+  padding: 12px 48px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .content {
+    padding: 0
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .content {
+    min-height: calc(100vh - 130px);
+  }
+}
