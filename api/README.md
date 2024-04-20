@@ -1,3 +1,7 @@
+NodeJS version: v20.10.0
+Yarn version: 1.22.10
+MongoDB
+
 Install the dependencies:
 
 ```bash
@@ -14,8 +18,8 @@ cp .env.example .env
 
 ## Commands
 
-Running locally:
+Running in production:
 
 ```bash
-yarn dev
+yarn start
 ```

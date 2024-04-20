@@ -1,21 +1,6 @@
-Install the dependencies:
+NodeJS version: v20.10.0
+Yarn version: 1.22.10
 
-```bash
-yarn install
-```
-
-Set the environment variables:
-
-```bash
-cp .env.example .env
-
-# open .env and modify the environment variables (if needed)
-```
-
-## Commands
-
-Running locally:
-
-```bash
-yarn dev
-```
+Install: yarn install
+Build: yarn build
+Start: yarn preview
