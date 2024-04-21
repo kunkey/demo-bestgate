@@ -21,7 +21,6 @@ const io = new Server(httpServer, {
 
 io.on('connection', (socket) => {
   const { paymentId } = socket.handshake.query;
-  console.log('paymentId', paymentId);
   if (paymentId) {
     socket.join(paymentId);
   }
