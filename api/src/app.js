@@ -64,16 +64,21 @@ app.post(
       redirectUrl: payment.redirectUrl,
     };
     const signature = genAuthorization(config.clientId, config.clientSecret);
-    const response = await axios.post(`${config.paymentGateUrl}/payment/create-order`, body, {
-      headers: {
-        signature,
-      },
-    });
-    const result = {
-      payment,
-      paymentIntent: response.data,
-    };
-    res.send(result);
+    try {
+      const response = await axios.post(`${config.paymentGateUrl}/payment/create-order`, body, {
+        headers: {
+          signature,
+        },
+      });
+      const result = {
+        payment,
+        paymentIntent: response.data,
+      };
+      res.send(result);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   })
 );
 
