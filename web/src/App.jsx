@@ -5,6 +5,7 @@ import numeral from 'numeral';
 import axios from 'axios';
 import moment from 'moment';
 import io from 'socket.io-client';
+import { isMobile } from 'react-device-detect';
 
 import LogoImg from './assets/logo.png'
 
@@ -63,12 +64,17 @@ function App() {
         redirectUrl: window.location.href
       }
       const response = await axios.post(`${import.meta.env.VITE_API_END_POINT}/create-payment-intent`, payment);
-      connectWS(response.data?.payment?.id);
 
       const url = response.data?.paymentIntent?.paymentUrl;
       const name = 'Nạp tiền';
       const options = 'left=0,top=0,width=1324,height=760';
-      window.newWindow = window.open(url, name, options);
+
+      if (isMobile) {
+        window.location.href = url
+      } else {
+        connectWS(response.data?.payment?.id);
+        window.newWindow = window.open(url, name, options);
+      }
 
       setStatus(PAYMENT_STATUS.waiting);
     } catch (error) {
