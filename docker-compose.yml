@@ -1,0 +1,13 @@
+services:
+  api:
+    build:
+      context: ./api
+    env_file:
+    - ./api/.env
+    ports:
+    - 127.0.0.1:3000:3000
+  web:
+    build:
+      context: ./web
+    ports:
+    - 127.0.0.1:8084:80

@@ -1,0 +1,63 @@
+name: dockerDeploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      api: ${{ steps.changes.outputs.api }}
+      web: ${{ steps.changes.outputs.web }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dorny/paths-filter@v2
+      id: changes
+      with:
+        filters: |
+          api:
+            - 'api/**'
+          web:
+            - 'web/**'          
+
+  api:
+    needs: changes
+    if: ${{ needs.changes.outputs.api == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ vars.PROD_DEPLOY_HOST }}
+        username: appuser
+        key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+        timeout: 10s
+        command_timeout: 10m
+        script: |
+            cd /data/demo
+
+            git checkout master
+            git fetch
+            git pull
+            bash deploy.sh api
+
+  web:
+    needs: changes
+    if: ${{ needs.changes.outputs.web == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ vars.PROD_DEPLOY_HOST }}
+        username: appuser
+        key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+        timeout: 10s
+        command_timeout: 10m
+        script: |
+            cd /data/demo
+
+            git checkout master
+            git fetch
+            git pull
+            bash deploy.sh web

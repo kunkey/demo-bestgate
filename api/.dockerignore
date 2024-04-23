@@ -1,0 +1,10 @@
+.git
+.env.example
+.env
+README.md
+INTERGRATION.md
+
+docker-compose.yml
+
+node_modules
+.husky/
